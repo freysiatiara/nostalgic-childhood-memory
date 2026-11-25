@@ -24,6 +24,12 @@ def resolve_output_path():
 
 def write_entry(path):
     """Write the line as plain UTF-8 text with world-readable mode."""
+    if not LINE:
+        raise ValueError("entry text must not be empty")
+    if len(LINE) > 280:
+        raise ValueError("entry text must be at most 280 characters")
+    if "\n" in LINE or "\r" in LINE:
+        raise ValueError("entry text must not contain newline characters")
     directory = os.path.dirname(path)
     if directory:
         os.makedirs(directory, exist_ok=True)
